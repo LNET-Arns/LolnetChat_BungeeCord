@@ -239,6 +239,7 @@ public class LolnetBCMessenger extends Plugin {
     public void reload() {
         setupLogger();
         config = getConfig();
+        PVPServers = config.getStringList("PVPServers");
     }
 
 }
