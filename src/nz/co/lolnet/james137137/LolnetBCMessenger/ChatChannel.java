@@ -324,8 +324,9 @@ public class ChatChannel {
             
             api.sendChannelMessage("LolnetBCMessenger", "replyLink:" + correctPlayerName + ":" + cs.getName() + "######" + "NULL" + "######" + "NULL");
             api.sendChannelMessage("LolnetBCMessenger", "player:" + correctPlayerName + "######" + "NULL" + "######" + messageToSend2);
-            if (isPVPServerRelated(correctPlayerName, cs.getName())) {
-                api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChatPVPServer" + "######" + SpyChat);
+            String pvpServerName = isPVPServerRelated(correctPlayerName, cs.getName());
+            if (pvpServerName != null) {
+                api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChatPVPServer" + "######" + ChatColor.RED + pvpServerName + ": " + ChatColor.RESET+  SpyChat);
             } else {
                 api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChat" + "######" + SpyChat);
             }
@@ -334,18 +335,23 @@ public class ChatChannel {
 
     }
 
-    private static boolean isPVPServerRelated(String player1, String player2) {
+    private static String isPVPServerRelated(String player1, String player2) {
         com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
         List<String> PVPServers = LolnetBCMessenger.PVPServers;
         UUID player1UUID = api.getUuidFromName(player1);
         UUID player2UUID = api.getUuidFromName(player2);
         for (String PVPServer : PVPServers) {
-            if (api.getPlayersOnServer(PVPServer).contains(player1UUID) || api.getPlayersOnServer(PVPServer).contains(player2UUID))
+            if (api.getPlayersOnServer(PVPServer).contains(player1UUID))
             {
-                return true;
+                return PVPServer;
             }
+            if (api.getPlayersOnServer(PVPServer).contains(player2UUID))
+            {
+                return PVPServer;
+            }
+            
         }
-        return false;
+        return null;
     }
 
     static class SpyChatCommand extends Command {
@@ -416,8 +422,9 @@ public class ChatChannel {
             cs.sendMessage(messageToSend1);
             api.sendChannelMessage("LolnetBCMessenger", "replyLink:" + correctPlayerName + ":" + cs.getName() + "######" + "NULL" + "######" + "NULL");
             api.sendChannelMessage("LolnetBCMessenger", "player:" + correctPlayerName + "######" + "NULL" + "######" + messageToSend2);
-            if (isPVPServerRelated(correctPlayerName, cs.getName())) {
-                api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChatPVPServer" + "######" + SpyChat);
+            String pvpServerName = isPVPServerRelated(correctPlayerName, cs.getName());
+            if (pvpServerName != null) {
+                api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChatPVPServer" + "######" + ChatColor.RED + pvpServerName + ": " + ChatColor.RESET+  SpyChat);
             } else {
                 api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChat" + "######" + SpyChat);
             }
