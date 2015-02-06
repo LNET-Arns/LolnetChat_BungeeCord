@@ -236,25 +236,25 @@ public class ChatChannel {
         }
     }
 
-    public static class debugTest extends Command {
-
-        public debugTest(LolnetBCMessenger aThis) {
-            super("debugTest");
-        }
-
-        @Override
-        public void execute(CommandSender cs, String[] strings) {
-            if (true) {
-                return;
-            }
-            PluginManager pluginManager = LolnetBCMessenger.plugin.getProxy().getPluginManager();
-            Field[] fields = LolnetBCMessenger.plugin.getProxy().getClass().getFields();
-            cs.sendMessage("" + fields.length);
-            for (Field field : fields) {
-                cs.sendMessage(field.getName());
-            }
-        }
+    /*public static class debugTest extends Command {
+    
+    public debugTest(LolnetBCMessenger aThis) {
+    super("debugTest");
     }
+    
+    @Override
+    public void execute(CommandSender cs, String[] strings) {
+    if (true) {
+    return;
+    }
+    PluginManager pluginManager = LolnetBCMessenger.plugin.getProxy().getPluginManager();
+    Field[] fields = LolnetBCMessenger.plugin.getProxy().getClass().getFields();
+    cs.sendMessage("" + fields.length);
+    for (Field field : fields) {
+    cs.sendMessage(field.getName());
+    }
+    }
+    }*/
 
     public static class PrivateChat extends Command {
 

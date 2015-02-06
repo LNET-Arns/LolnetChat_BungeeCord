@@ -81,7 +81,7 @@ public class LolnetBCMessenger extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new ChatChannel.ModChat(this));
         getProxy().getPluginManager().registerCommand(this, new ChatChannel.UAChat(this));
         getProxy().getPluginManager().registerListener(this, new EventListener(this));
-        getProxy().getPluginManager().registerCommand(this, new ChatChannel.debugTest(this));
+        //getProxy().getPluginManager().registerCommand(this, new ChatChannel.debugTest(this));
 
     }
 
