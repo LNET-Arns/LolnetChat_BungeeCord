@@ -50,6 +50,52 @@ public class ChatChannel {
         }
         return SpyMode;
     }
+    
+    public static class DevChat extends Command {
+
+        public DevChat(LolnetBCMessenger aThis) {
+            super("DevChat", "LolnetBCMessenger.DevChat", "dc");
+        }
+
+        @Override
+        public void execute(CommandSender cs, String[] strings) {
+
+            if (isSilentMode.contains(cs.getName())) {
+                cs.sendMessage(ChatColor.RED + "You are in SilentMode, run /SilentMode or relog to turn off.");
+                return;
+            }
+            if (strings.length == 0) {
+                cs.sendMessage("§6/dc <messagehere>");
+                return;
+            }
+            String message = "";
+            for (String string : strings) {
+                message += string + " ";
+            }
+            sendMessage(cs.getName(), message, "DEV");
+
+        }
+
+        private void sendMessage(String senderName, String message, String channelName) {
+            log.info("[" + channelName + "Channel]:" + senderName + ":" + message);
+            String serverName = LolnetBCMessenger.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
+            String messageToSend = ChatColor.DARK_PURPLE + "[" + "Dev" + "-Chat] " + "§6[" + serverName + "]: §r" + senderName + ": " + message;
+            try {
+                com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
+
+                api.sendChannelMessage("LolnetBCMessenger", "player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.DevChat" + "######" + messageToSend);
+
+            } catch (Exception e) {
+                for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+                    if (proxiedPlayer.hasPermission("LolnetBCMessenger.DevChat")) {
+                        proxiedPlayer.sendMessage(messageToSend);
+                    }
+
+                }
+            }
+
+        }
+    }
 
     public static class VIPChat extends Command {
 
