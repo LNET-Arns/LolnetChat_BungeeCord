@@ -26,6 +26,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import static nz.co.lolnet.james137137.LolnetBCMessenger.ChatChannel.replyPerson;
+import nz.co.lolnet.lolnetfourmpermissionbcbridge.LolnetFourmPermissionBCBridge;
 
 /**
  *
@@ -38,6 +39,7 @@ public class EventListener implements Listener {
     public static HashSet<String> isGlobalMode;
     public static HashSet<String> isBroadCastMode;
     public static HashSet<String> isNotifyMode;
+    public static HashMap<String, String> playerPrefix;
     HashMap<String, Long> lastChatTime;
     HashMap<String, String> lastMessage;
     HashMap<String, Integer> warningCount;
@@ -45,6 +47,7 @@ public class EventListener implements Listener {
 
     public EventListener(LolnetBCMessenger aThis) {
         plugin = aThis;
+        playerPrefix = new HashMap<>();
         isSilentMode = new HashSet<>();
         isGlobalMode = new HashSet<>();
         isBroadCastMode = new HashSet<>();
@@ -57,6 +60,21 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PostLoginEvent event) {
         warningCount.put(event.getPlayer().getName(), 0);
+        final String playerName = event.getPlayer().getName();
+
+        BungeeCord.getInstance().getScheduler().runAsync(plugin, new Runnable() {
+
+            @Override
+            public void run() {
+                String prefix = "";
+                try {
+                    prefix = ChatChannel.getprefix(LolnetFourmPermissionBCBridge.getHighestRank(playerName));
+                } catch (Exception ex) {
+                }
+                playerPrefix.put(playerName.toLowerCase(), prefix);
+            }
+        });
+
     }
 
     @EventHandler
@@ -68,6 +86,7 @@ public class EventListener implements Listener {
         isSilentMode.remove(event.getPlayer().getName());
         isGlobalMode.remove(event.getPlayer().getName());
         isBroadCastMode.remove(event.getPlayer().getName());
+        playerPrefix.remove(event.getPlayer().getName().toLowerCase());
     }
 
     @EventHandler
@@ -395,20 +414,20 @@ public class EventListener implements Listener {
             String messageToSend = ChatColor.RED + player.getName() + " was caught by the chat filter for: HIGHCAPS";
             String messageToSend2 = ChatColor.RED + "Message was the following: " + oldMessage;
             /*try {
-                com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
+             com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
 
-            api.sendChannelMessage("LolnetBCMessenger", "NOBYPASS_player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.filter.notify" + "######" + messageToSend);
-                api.sendChannelMessage("LolnetBCMessenger", "NOBYPASS_player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.filter.notify" + "######" + messageToSend2);
+             api.sendChannelMessage("LolnetBCMessenger", "NOBYPASS_player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.filter.notify" + "######" + messageToSend);
+             api.sendChannelMessage("LolnetBCMessenger", "NOBYPASS_player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.filter.notify" + "######" + messageToSend2);
 
-            } catch (Exception e) {
-                for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
-                    if (proxiedPlayer.hasPermission("LolnetBCMessenger.filter.notify")) {
-                        proxiedPlayer.sendMessage(messageToSend);
-                        proxiedPlayer.sendMessage(ChatColor.RED + "Message was the following: " + oldMessage);
-                    }
+             } catch (Exception e) {
+             for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+             if (proxiedPlayer.hasPermission("LolnetBCMessenger.filter.notify")) {
+             proxiedPlayer.sendMessage(messageToSend);
+             proxiedPlayer.sendMessage(ChatColor.RED + "Message was the following: " + oldMessage);
+             }
 
-                }
-            }*/
+             }
+             }*/
             LolnetBCMessenger.log(messageToSend);
             LolnetBCMessenger.log(messageToSend2);
         }

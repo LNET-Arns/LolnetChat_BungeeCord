@@ -5,22 +5,22 @@
  */
 package nz.co.lolnet.james137137.LolnetBCMessenger;
 
-import com.google.common.collect.Multimap;
-import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
+import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import net.md_5.bungee.api.plugin.PluginManager;
 import static nz.co.lolnet.james137137.LolnetBCMessenger.EventListener.isBroadCastMode;
 import static nz.co.lolnet.james137137.LolnetBCMessenger.EventListener.isGlobalMode;
 import static nz.co.lolnet.james137137.LolnetBCMessenger.EventListener.isNotifyMode;
 import static nz.co.lolnet.james137137.LolnetBCMessenger.EventListener.isSilentMode;
+import static nz.co.lolnet.james137137.LolnetBCMessenger.EventListener.playerPrefix;
+import static nz.co.lolnet.james137137.LolnetBCMessenger.EventListener.plugin;
 import nz.co.lolnet.lolnetfourmpermissionbcbridge.LolnetFourmPermissionBCBridge;
 
 /**
@@ -50,7 +50,7 @@ public class ChatChannel {
         }
         return SpyMode;
     }
-    
+
     public static class DevChat extends Command {
 
         public DevChat(LolnetBCMessenger aThis) {
@@ -284,24 +284,23 @@ public class ChatChannel {
 
     /*public static class debugTest extends Command {
     
-    public debugTest(LolnetBCMessenger aThis) {
-    super("debugTest");
-    }
+     public debugTest(LolnetBCMessenger aThis) {
+     super("debugTest");
+     }
     
-    @Override
-    public void execute(CommandSender cs, String[] strings) {
-    if (true) {
-    return;
-    }
-    PluginManager pluginManager = LolnetBCMessenger.plugin.getProxy().getPluginManager();
-    Field[] fields = LolnetBCMessenger.plugin.getProxy().getClass().getFields();
-    cs.sendMessage("" + fields.length);
-    for (Field field : fields) {
-    cs.sendMessage(field.getName());
-    }
-    }
-    }*/
-
+     @Override
+     public void execute(CommandSender cs, String[] strings) {
+     if (true) {
+     return;
+     }
+     PluginManager pluginManager = LolnetBCMessenger.plugin.getProxy().getPluginManager();
+     Field[] fields = LolnetBCMessenger.plugin.getProxy().getClass().getFields();
+     cs.sendMessage("" + fields.length);
+     for (Field field : fields) {
+     cs.sendMessage(field.getName());
+     }
+     }
+     }*/
     public static class PrivateChat extends Command {
 
         public PrivateChat(LolnetBCMessenger aThis) {
@@ -348,17 +347,8 @@ public class ChatChannel {
             for (int i = 1; i < strings.length; i++) {
                 message += strings[i] + " ";
             }
-            String correctPlayerPrefix = "";
-            String senderPrefix = "";
-            try {
-                correctPlayerPrefix = ChatChannel.getprefix(LolnetFourmPermissionBCBridge.getHighestRank(correctPlayerName));
-
-            } catch (Exception ex) {
-            }
-            try {
-                senderPrefix = ChatChannel.getprefix(LolnetFourmPermissionBCBridge.getHighestRank(cs.getName()));
-            } catch (Exception e) {
-            }
+            String correctPlayerPrefix = getPlayerPrefix(correctPlayerName);
+            String senderPrefix = getPlayerPrefix(cs.getName());
 
             String messageToSend1 = ChatColor.GOLD + "[me -> " + ChatColor.RESET
                     + correctPlayerPrefix + correctPlayerName + ChatColor.GOLD + "] " + ChatColor.RESET + message;
@@ -367,12 +357,12 @@ public class ChatChannel {
             String SpyChat = ChatColor.GRAY + "[" + cs.getName() + " -> " + correctPlayerName + ChatColor.GRAY + "] " + ChatColor.RESET + message;
 
             cs.sendMessage(messageToSend1);
-            
+
             api.sendChannelMessage("LolnetBCMessenger", "replyLink:" + correctPlayerName + ":" + cs.getName() + "######" + "NULL" + "######" + "NULL");
             api.sendChannelMessage("LolnetBCMessenger", "player:" + correctPlayerName + "######" + "NULL" + "######" + messageToSend2);
             String pvpServerName = isPVPServerRelated(correctPlayerName, cs.getName());
             if (pvpServerName != null) {
-                api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChatPVPServer" + "######" + ChatColor.RED + pvpServerName + ": " + ChatColor.RESET+  SpyChat);
+                api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChatPVPServer" + "######" + ChatColor.RED + pvpServerName + ": " + ChatColor.RESET + SpyChat);
             } else {
                 api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChat" + "######" + SpyChat);
             }
@@ -381,21 +371,40 @@ public class ChatChannel {
 
     }
 
+    public static String getPlayerPrefix(final String playerName) {
+        String prefix = playerPrefix.get(playerName.toLowerCase());
+        if (prefix == null) {
+            BungeeCord.getInstance().getScheduler().runAsync(plugin, new Runnable() {
+
+                @Override
+                public void run() {
+                    String prefix = "";
+                    try {
+                        prefix = ChatChannel.getprefix(LolnetFourmPermissionBCBridge.getHighestRank(playerName));
+                    } catch (Exception ex) {
+                    }
+                    playerPrefix.put(playerName.toLowerCase(), prefix);
+                }
+            });
+            return "";
+        } else {
+            return prefix;
+        }
+    }
+
     private static String isPVPServerRelated(String player1, String player2) {
         com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
         List<String> PVPServers = LolnetBCMessenger.PVPServers;
         UUID player1UUID = api.getUuidFromName(player1);
         UUID player2UUID = api.getUuidFromName(player2);
         for (String PVPServer : PVPServers) {
-            if (api.getPlayersOnServer(PVPServer).contains(player1UUID))
-            {
+            if (api.getPlayersOnServer(PVPServer).contains(player1UUID)) {
                 return PVPServer;
             }
-            if (api.getPlayersOnServer(PVPServer).contains(player2UUID))
-            {
+            if (api.getPlayersOnServer(PVPServer).contains(player2UUID)) {
                 return PVPServer;
             }
-            
+
         }
         return null;
     }
@@ -447,17 +456,8 @@ public class ChatChannel {
             for (int i = 0; i < strings.length; i++) {
                 message += strings[i] + " ";
             }
-            String correctPlayerPrefix = "";
-            String senderPrefix = "";
-            try {
-                correctPlayerPrefix = ChatChannel.getprefix(LolnetFourmPermissionBCBridge.getHighestRank(correctPlayerName));
-
-            } catch (Exception ex) {
-            }
-            try {
-                senderPrefix = ChatChannel.getprefix(LolnetFourmPermissionBCBridge.getHighestRank(cs.getName()));
-            } catch (Exception e) {
-            }
+            String correctPlayerPrefix = getPlayerPrefix(correctPlayerName);
+            String senderPrefix = getPlayerPrefix(cs.getName());
 
             String messageToSend1 = ChatColor.GOLD + "[me -> " + ChatColor.RESET
                     + correctPlayerPrefix + correctPlayerName + ChatColor.GOLD + "] " + ChatColor.RESET + message;
@@ -470,7 +470,7 @@ public class ChatChannel {
             api.sendChannelMessage("LolnetBCMessenger", "player:" + correctPlayerName + "######" + "NULL" + "######" + messageToSend2);
             String pvpServerName = isPVPServerRelated(correctPlayerName, cs.getName());
             if (pvpServerName != null) {
-                api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChatPVPServer" + "######" + ChatColor.RED + pvpServerName + ": " + ChatColor.RESET+  SpyChat);
+                api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChatPVPServer" + "######" + ChatColor.RED + pvpServerName + ": " + ChatColor.RESET + SpyChat);
             } else {
                 api.sendChannelMessage("LolnetBCMessenger", "SpyChat" + "######" + "LolnetBCMessenger.spyChat" + "######" + SpyChat);
             }
