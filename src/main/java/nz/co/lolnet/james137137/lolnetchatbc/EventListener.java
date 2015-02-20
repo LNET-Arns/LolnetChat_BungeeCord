@@ -34,7 +34,7 @@ import nz.co.lolnet.lolnetfourmpermissionbcbridge.LolnetFourmPermissionBCBridge;
  */
 public class EventListener implements Listener {
 
-    public static LolnetBCMessenger plugin;
+    public static LolnetChatBC plugin;
     public static HashSet<String> isSilentMode;
     public static HashSet<String> isGlobalMode;
     public static HashSet<String> isBroadCastMode;
@@ -45,7 +45,7 @@ public class EventListener implements Listener {
     HashMap<String, Integer> warningCount;
     final int maxWarning = 5;
 
-    public EventListener(LolnetBCMessenger aThis) {
+    public EventListener(LolnetChatBC aThis) {
         plugin = aThis;
         playerPrefix = new HashMap<>();
         isSilentMode = new HashSet<>();
@@ -175,7 +175,7 @@ public class EventListener implements Listener {
         }
 
         if (!target.startsWith("SpyChat")) {
-            LolnetBCMessenger.log(target + "|" + messageToSend);
+            LolnetChatBC.log(target + "|" + messageToSend);
         }
 
         if (target.startsWith("player:")) {
@@ -428,8 +428,8 @@ public class EventListener implements Listener {
 
              }
              }*/
-            LolnetBCMessenger.log(messageToSend);
-            LolnetBCMessenger.log(messageToSend2);
+            LolnetChatBC.log(messageToSend);
+            LolnetChatBC.log(messageToSend2);
         }
     }
 
@@ -488,7 +488,7 @@ public class EventListener implements Listener {
                     api.sendChannelMessage("LolnetBCMessenger", "NOBYPASS_player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.filter.notify" + "######" + ChatColor.RED + "Message was the following: " + event.getMessage());
 
                 } catch (Exception e) {
-                    for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+                    for (ProxiedPlayer proxiedPlayer : LolnetChatBC.plugin.getProxy().getPlayers()) {
                         if (proxiedPlayer.hasPermission("LolnetBCMessenger.filter.notify")) {
                             proxiedPlayer.sendMessage(messageToSend);
                             proxiedPlayer.sendMessage(ChatColor.RED + "Message was the following: " + event.getMessage());
@@ -534,7 +534,7 @@ public class EventListener implements Listener {
                         }
 
                     } catch (Exception e) {
-                        for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+                        for (ProxiedPlayer proxiedPlayer : LolnetChatBC.plugin.getProxy().getPlayers()) {
                             proxiedPlayer.sendMessage(formatedMesssage);
 
                         }
@@ -547,7 +547,7 @@ public class EventListener implements Listener {
     }
 
     private static String formatMessage(ProxiedPlayer player, String message, boolean isMod) {
-        String serverName = LolnetBCMessenger.plugin.getProxy().getPlayer(player.getName()).getServer().getInfo().getName();
+        String serverName = LolnetChatBC.plugin.getProxy().getPlayer(player.getName()).getServer().getInfo().getName();
         if (isMod) {
             message = message.replaceAll("&", "§");
         }

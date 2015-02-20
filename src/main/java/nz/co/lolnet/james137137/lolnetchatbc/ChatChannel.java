@@ -53,7 +53,7 @@ public class ChatChannel {
 
     public static class DevChat extends Command {
 
-        public DevChat(LolnetBCMessenger aThis) {
+        public DevChat(LolnetChatBC aThis) {
             super("DevChat", "LolnetBCMessenger.DevChat", "dc");
         }
 
@@ -78,7 +78,7 @@ public class ChatChannel {
 
         private void sendMessage(String senderName, String message, String channelName) {
             log.info("[" + channelName + "Channel]:" + senderName + ":" + message);
-            String serverName = LolnetBCMessenger.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
+            String serverName = LolnetChatBC.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
             String messageToSend = ChatColor.DARK_PURPLE + "[" + "Dev" + "-Chat] " + "§6[" + serverName + "]: §r" + senderName + ": " + message;
             try {
                 com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
@@ -86,7 +86,7 @@ public class ChatChannel {
                 api.sendChannelMessage("LolnetBCMessenger", "player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.DevChat" + "######" + messageToSend);
 
             } catch (Exception e) {
-                for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+                for (ProxiedPlayer proxiedPlayer : LolnetChatBC.plugin.getProxy().getPlayers()) {
                     if (proxiedPlayer.hasPermission("LolnetBCMessenger.DevChat")) {
                         proxiedPlayer.sendMessage(messageToSend);
                     }
@@ -99,7 +99,7 @@ public class ChatChannel {
 
     public static class VIPChat extends Command {
 
-        public VIPChat(LolnetBCMessenger aThis) {
+        public VIPChat(LolnetChatBC aThis) {
             super("VIPChat", "LolnetBCMessenger.VIPChat", "gv");
         }
 
@@ -124,7 +124,7 @@ public class ChatChannel {
 
         private void sendMessage(String senderName, String message, String channelName) {
             log.info("[" + channelName + "Channel]:" + senderName + ":" + message);
-            String serverName = LolnetBCMessenger.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
+            String serverName = LolnetChatBC.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
             String messageToSend = ChatColor.GOLD + "[" + "VIP" + "-Chat] " + "§6[" + serverName + "]: §r" + senderName + ": " + message;
             try {
                 com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
@@ -132,7 +132,7 @@ public class ChatChannel {
                 api.sendChannelMessage("LolnetBCMessenger", "player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.VIPChat" + "######" + messageToSend);
 
             } catch (Exception e) {
-                for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+                for (ProxiedPlayer proxiedPlayer : LolnetChatBC.plugin.getProxy().getPlayers()) {
                     if (proxiedPlayer.hasPermission("LolnetBCMessenger.VIPChat")) {
                         proxiedPlayer.sendMessage(messageToSend);
                     }
@@ -145,7 +145,7 @@ public class ChatChannel {
 
     public static class AdminChat extends Command {
 
-        public AdminChat(LolnetBCMessenger aThis) {
+        public AdminChat(LolnetChatBC aThis) {
             super("adminChat", "LolnetBCMessenger.AdminChat", "ac");
         }
 
@@ -170,7 +170,7 @@ public class ChatChannel {
 
         private void sendMessage(String senderName, String message, String channelName) {
             log.info("[" + channelName + "Channel]:" + senderName + ":" + message);
-            String serverName = LolnetBCMessenger.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
+            String serverName = LolnetChatBC.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
 
             String messageToSend = "§c[" + "Admin" + "-Chat] " + "§6[" + serverName + "]: §r" + senderName + ": " + message;
             try {
@@ -179,7 +179,7 @@ public class ChatChannel {
                 api.sendChannelMessage("LolnetBCMessenger", "player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.AdminChat" + "######" + messageToSend);
 
             } catch (Exception e) {
-                for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+                for (ProxiedPlayer proxiedPlayer : LolnetChatBC.plugin.getProxy().getPlayers()) {
                     if (proxiedPlayer.hasPermission("LolnetBCMessenger.AdminChat")) {
                         proxiedPlayer.sendMessage(messageToSend);
                     }
@@ -192,7 +192,7 @@ public class ChatChannel {
 
     public static class ModChat extends Command {
 
-        public ModChat(LolnetBCMessenger aThis) {
+        public ModChat(LolnetChatBC aThis) {
             super("ModChat", "LolnetBCMessenger.ModChat", "mc", "mb", "sc");
         }
 
@@ -217,7 +217,7 @@ public class ChatChannel {
 
         private void sendMessage(String senderName, String message, String channelName) {
             log.info("[" + channelName + "Channel]:" + senderName + ":" + message);
-            String serverName = LolnetBCMessenger.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
+            String serverName = LolnetChatBC.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
             String messageToSend = "§3[" + "Mod" + "-Chat] " + "§6[" + serverName + "]: §r" + senderName + ": " + message;
             try {
                 com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
@@ -225,7 +225,7 @@ public class ChatChannel {
                 api.sendChannelMessage("LolnetBCMessenger", "player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.ModChat" + "######" + messageToSend);
 
             } catch (Exception e) {
-                for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+                for (ProxiedPlayer proxiedPlayer : LolnetChatBC.plugin.getProxy().getPlayers()) {
                     if (proxiedPlayer.hasPermission("LolnetBCMessenger.ModChat")) {
                         proxiedPlayer.sendMessage(messageToSend);
                     }
@@ -238,7 +238,7 @@ public class ChatChannel {
 
     public static class UAChat extends Command {
 
-        public UAChat(LolnetBCMessenger aThis) {
+        public UAChat(LolnetChatBC aThis) {
             super("UAChat", "LolnetBCMessenger.UAChat", "uc");
         }
 
@@ -263,7 +263,7 @@ public class ChatChannel {
 
         private void sendMessage(String senderName, String message, String channelName) {
             log.info("[" + channelName + "Channel]:" + senderName + ":" + message);
-            String serverName = LolnetBCMessenger.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
+            String serverName = LolnetChatBC.plugin.getProxy().getPlayer(senderName).getServer().getInfo().getName();
             String messageToSend = "§2[" + "UA" + "-Chat] " + "§6[" + serverName + "]: §r" + senderName + ": " + message;
             try {
                 com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
@@ -271,7 +271,7 @@ public class ChatChannel {
                 api.sendChannelMessage("LolnetBCMessenger", "player:ALLTHEPLAYERS" + "######" + "LolnetBCMessenger.UAChat" + "######" + messageToSend);
 
             } catch (Exception e) {
-                for (ProxiedPlayer proxiedPlayer : LolnetBCMessenger.plugin.getProxy().getPlayers()) {
+                for (ProxiedPlayer proxiedPlayer : LolnetChatBC.plugin.getProxy().getPlayers()) {
                     if (proxiedPlayer.hasPermission("LolnetBCMessenger.UAChat")) {
                         proxiedPlayer.sendMessage(messageToSend);
                     }
@@ -303,7 +303,7 @@ public class ChatChannel {
      }*/
     public static class PrivateChat extends Command {
 
-        public PrivateChat(LolnetBCMessenger aThis) {
+        public PrivateChat(LolnetChatBC aThis) {
             super("message", null, "tell", "m", "msg", "w", "whisper");
         }
 
@@ -404,7 +404,7 @@ public class ChatChannel {
 
     private static String isPVPServerRelated(String player1, String player2) {
         com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
-        List<String> PVPServers = LolnetBCMessenger.PVPServers;
+        List<String> PVPServers = LolnetChatBC.PVPServers;
         UUID player1UUID = api.getUuidFromName(player1);
         UUID player2UUID = api.getUuidFromName(player2);
         for (String PVPServer : PVPServers) {
@@ -421,7 +421,7 @@ public class ChatChannel {
 
     static class SpyChatCommand extends Command {
 
-        public SpyChatCommand(LolnetBCMessenger aThis) {
+        public SpyChatCommand(LolnetChatBC aThis) {
             super("spychat", "LolnetBCMessenger.spyChat", "socialspy");
         }
 
@@ -438,7 +438,7 @@ public class ChatChannel {
 
     public static class ReplyChat extends Command {
 
-        public ReplyChat(LolnetBCMessenger aThis) {
+        public ReplyChat(LolnetChatBC aThis) {
             super("reply", null, "r");
         }
 
@@ -497,7 +497,7 @@ public class ChatChannel {
                 group = "" + object;
             }
         }
-        String string1 = LolnetBCMessenger.plugin.getConfig().getString(group);
+        String string1 = LolnetChatBC.plugin.getConfig().getString(group);
         if (string1 != null) {
             return string1.replaceAll("&", "§");
         }
@@ -505,7 +505,7 @@ public class ChatChannel {
     }
 
     public static String getprefix(String Highestgroup) {
-        String string1 = LolnetBCMessenger.plugin.getConfig().getString(Highestgroup);
+        String string1 = LolnetChatBC.plugin.getConfig().getString(Highestgroup);
         if (string1 != null) {
             return string1.replaceAll("&", "§");
         }
@@ -514,13 +514,13 @@ public class ChatChannel {
 
     public static class reloadCommand extends Command {
 
-        public reloadCommand(LolnetBCMessenger aThis) {
+        public reloadCommand(LolnetChatBC aThis) {
             super("LolnetBCMessengerReload", "LolnetBCMessenger.Reload", "LBCMReload");
         }
 
         @Override
         public void execute(CommandSender cs, String[] strings) {
-            LolnetBCMessenger.plugin.reload();
+            LolnetChatBC.plugin.reload();
             SpyChat = new HashMap<>();
             cs.sendMessage(ChatColor.GREEN + "Reloaded!");
         }
@@ -528,7 +528,7 @@ public class ChatChannel {
 
     public static class SlientMode extends Command {
 
-        public SlientMode(LolnetBCMessenger aThis) {
+        public SlientMode(LolnetChatBC aThis) {
             super("SilentMode", "LolnetBCMessenger.ModChat");
         }
 
@@ -562,7 +562,7 @@ public class ChatChannel {
 
     public static class toggleGlobalChat extends Command {
 
-        public toggleGlobalChat(LolnetBCMessenger aThis) {
+        public toggleGlobalChat(LolnetChatBC aThis) {
             super("toggleglobalchat", "LolnetBCMessenger.toggleglobalchat", "tgc");
         }
 
@@ -580,7 +580,7 @@ public class ChatChannel {
 
     public static class toggleBroadcastChat extends Command {
 
-        public toggleBroadcastChat(LolnetBCMessenger aThis) {
+        public toggleBroadcastChat(LolnetChatBC aThis) {
             super("togglebroadcastchat", "LolnetBCMessenger.togglebroadcastchat", "tbc");
         }
 
@@ -598,7 +598,7 @@ public class ChatChannel {
 
     public static class toggleFilterNotify extends Command {
 
-        public toggleFilterNotify(LolnetBCMessenger aThis) {
+        public toggleFilterNotify(LolnetChatBC aThis) {
             super("toggleFilterNotify", "LolnetBCMessenger.filter.notify", "tfn");
         }
 

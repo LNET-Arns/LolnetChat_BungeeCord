@@ -31,9 +31,9 @@ import net.md_5.bungee.config.YamlConfiguration;
  *
  * @author James
  */
-public class LolnetBCMessenger extends Plugin {
+public class LolnetChatBC extends Plugin {
 
-    public static LolnetBCMessenger plugin;
+    public static LolnetChatBC plugin;
     private static File myLogFile;
     static List<String> PVPServers;
     Configuration config;
@@ -157,7 +157,7 @@ public class LolnetBCMessenger extends Plugin {
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(config, new File(getDataFolder(), "config.yml"));
         } catch (IOException ex) {
-            Logger.getLogger(LolnetBCMessenger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LolnetChatBC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -186,7 +186,7 @@ public class LolnetBCMessenger extends Plugin {
         try {
             config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configFile);
         } catch (IOException ex) {
-            Logger.getLogger(LolnetBCMessenger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LolnetChatBC.class.getName()).log(Level.SEVERE, null, ex);
         }
         return config;
     }
@@ -227,12 +227,12 @@ public class LolnetBCMessenger extends Plugin {
         if (!theDir.exists()) {
             theDir.mkdirs();
         }
-        LolnetBCMessenger.myLogFile = new File(theDir, System.currentTimeMillis() + ".log");
+        LolnetChatBC.myLogFile = new File(theDir, System.currentTimeMillis() + ".log");
 
         try {
             myLogFile.createNewFile();
         } catch (IOException ex) {
-            Logger.getLogger(LolnetBCMessenger.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LolnetChatBC.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
