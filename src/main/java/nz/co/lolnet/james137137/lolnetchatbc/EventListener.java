@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Level;
-import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -62,7 +61,7 @@ public class EventListener implements Listener {
         warningCount.put(event.getPlayer().getName(), 0);
         final String playerName = event.getPlayer().getName();
 
-        BungeeCord.getInstance().getScheduler().runAsync(plugin, new Runnable() {
+        LolnetChatBC.plugin.getProxy().getScheduler().runAsync(plugin, new Runnable() {
 
             @Override
             public void run() {
@@ -195,7 +194,7 @@ public class EventListener implements Listener {
                     }
                 }
             } else {
-                ProxiedPlayer player = BungeeCord.getInstance().getPlayer(playerName);
+                ProxiedPlayer player = LolnetChatBC.plugin.getProxy().getPlayer(playerName);
                 if (player != null && (permission.equals("NULL") || player.hasPermission(permission))) {
                     if (!isSilentMode.contains(player.getName())) {
                         if (tc == null) {
@@ -238,7 +237,7 @@ public class EventListener implements Listener {
             }
         } else if (target.startsWith("SERVER:")) {
             String serverName = target.split(":")[1];
-            ServerInfo server = BungeeCord.getInstance().getServers().get(serverName);
+            ServerInfo server = LolnetChatBC.plugin.getProxy().getServers().get(serverName);
             if (server != null) {
                 Collection<ProxiedPlayer> players = server.getPlayers();
                 for (ProxiedPlayer player : players) {
@@ -275,7 +274,7 @@ public class EventListener implements Listener {
                     }
                 }
             } else {
-                ProxiedPlayer player = BungeeCord.getInstance().getPlayer(playerName);
+                ProxiedPlayer player = LolnetChatBC.plugin.getProxy().getPlayer(playerName);
                 if (player != null && (permission.equals("NULL") || player.hasPermission(permission))) {
                     if (tc == null) {
                         player.sendMessage(messageToSend);
@@ -315,7 +314,7 @@ public class EventListener implements Listener {
             }
         } else if (target.startsWith("NOBYPASS_SERVER:")) {
             String serverName = target.split(":")[1];
-            ServerInfo server = BungeeCord.getInstance().getServers().get(serverName);
+            ServerInfo server = LolnetChatBC.plugin.getProxy().getServers().get(serverName);
             if (server != null) {
                 Collection<ProxiedPlayer> players = server.getPlayers();
                 for (ProxiedPlayer player : players) {
@@ -348,11 +347,11 @@ public class EventListener implements Listener {
         } else if (target.startsWith("replyLink:")) {
             String player1Name = target.split(":")[1];
             String player2Name = target.split(":")[2];
-            ProxiedPlayer player1 = BungeeCord.getInstance().getPlayer(player1Name);
+            ProxiedPlayer player1 = LolnetChatBC.plugin.getProxy().getPlayer(player1Name);
             if (player1 != null) {
                 replyPerson.put(player1Name, player2Name);
             }
-            ProxiedPlayer player2 = BungeeCord.getInstance().getPlayer(player2Name);
+            ProxiedPlayer player2 = LolnetChatBC.plugin.getProxy().getPlayer(player2Name);
             if (player2 != null) {
                 replyPerson.put(player2Name, player1Name);
             }

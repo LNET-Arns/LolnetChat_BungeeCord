@@ -14,21 +14,24 @@
     <dependencies>
         <dependency>
             <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
+            <artifactId>BungeeCord</artifactId>
             <version>1.8-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-proxy</artifactId>
-            <version>1.8-SNAPSHOT</version>
-            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/BungeeCord.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>fr.Alphart</groupId>
             <artifactId>bungeeadmintools</artifactId>
-            <version>1.2.7.1</version>
-            <type>jar</type>
+            <version>1.2.12</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/BungeeAdminTools-1.2.12fix.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.imaginarycode.minecraft</groupId>
+            <artifactId>RedisBungee</artifactId>
+            <version>0.3.5</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/RedisBungee-0.3.5.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>nz.co.lolnet</groupId>
@@ -38,13 +41,6 @@
             <systemPath>${basedir}/lib/LolnetFourmPermissionBCBridge.jar</systemPath>
         </dependency>
     </dependencies>
-    
-    <repositories>
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
     <build>
         <finalName>LolnetChat_BC</finalName>
     </build>
