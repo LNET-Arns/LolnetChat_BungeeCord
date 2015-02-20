@@ -561,7 +561,7 @@ public class EventListener implements Listener {
         output += serverShort + sep;
         output += serverName + sep;
 
-        String playerName = ChatChannel.getprefix(player.getGroups()) + player.getDisplayName() + ChatColor.RESET;
+        String playerName = ChatChannel.getPlayerPrefix(player) + player.getDisplayName() + ChatColor.RESET;
         output += " " + playerName + ": " + message;
         plugin.getProxy().getLogger().log(Level.INFO, "[{0}{1}{2}" + "]" + " [{3}] {4}", new Object[]{ChatColor.YELLOW, serverName, ChatColor.RESET, player.getDisplayName(), message});
         return output;

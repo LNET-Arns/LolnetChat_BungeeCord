@@ -392,6 +392,16 @@ public class ChatChannel {
         }
     }
 
+    public static String getPlayerPrefix(ProxiedPlayer player) {
+        String prefix = playerPrefix.get(player.getName().toLowerCase());
+        if (prefix == null) {
+            prefix = ChatChannel.getprefix(player.getGroups());
+            playerPrefix.put(player.getName().toLowerCase(), prefix);
+        }
+
+        return prefix;
+    }
+
     private static String isPVPServerRelated(String player1, String player2) {
         com.imaginarycode.minecraft.redisbungee.RedisBungeeAPI api = com.imaginarycode.minecraft.redisbungee.RedisBungee.getApi();
         List<String> PVPServers = LolnetBCMessenger.PVPServers;
@@ -478,7 +488,7 @@ public class ChatChannel {
         }
     }
 
-    public static String getprefix(Collection<String> groups) {
+    private static String getprefix(Collection<String> groups) {
 
         Object[] toArray = groups.toArray();
         String group = "default";
