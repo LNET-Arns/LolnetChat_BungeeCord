@@ -1,0 +1,21 @@
+#modes:
+# 0 = offline, everyone must login
+# 1 = simi-online
+# 2 = online
+mode: 1
+GoOfflineIfMojangIsDown: true
+PLEASE_LOGIN_MESSAGE: '&cYou must &alogin &cor register using &a/register'
+USERNAME_LESS_THAN_3_CHARACTERS_MESSAGE: '&cUsername must be longer than 3 characters!'
+USERNAME_INVALID: '&cInvalid Username!'
+PLAYER_CHAT_MESSAGE:
+  - '&6--------====== &2lolAuth &6=====--------'
+  - '&bWelcome to the Lolnet Minecraft Server! Thank you for joining.'
+  - '&cTo start playing you need to &aregister.'
+  - '&c- To register on the server use &a/register email password passwordagain'
+  - '&c- Need help? Read the &aWelcome Guide book &cin your inventory'
+  - ' '
+  - '&cAlready registered? Login using: &a/login password'
+  - '&6--------========================--------'
+PLAYER_NOT_REGISTERED_MESSAGE:
+  - '&cTo start playing you need to &aregister.'
+  - '&c- To register on the server use &a/register email password passwordagain'

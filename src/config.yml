@@ -1,8 +1,0 @@
-ADMINISTRATORS: '&4[Admin] &4'
-
-ServerShorten:
-    lobby: 'lobby'
-    factions: '[WW]'
-PVPServers:
-    - factions
-    - newfactions
