@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
-import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -374,7 +373,7 @@ public class ChatChannel {
     public static String getPlayerPrefix(final String playerName) {
         String prefix = playerPrefix.get(playerName.toLowerCase());
         if (prefix == null) {
-            BungeeCord.getInstance().getScheduler().runAsync(plugin, new Runnable() {
+            LolnetChatBC.plugin.getProxy().getScheduler().runAsync(plugin, new Runnable() {
 
                 @Override
                 public void run() {
